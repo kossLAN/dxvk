@@ -1,3 +1,4 @@
+#include <atomic>
 #include <tuple>
 
 #include "vulkan_loader.h"
@@ -41,7 +42,20 @@ namespace dxvk::vk {
     return { };
   }
 
+  static std::atomic<PFN_vkGetInstanceProcAddr> s_loaderProc = { nullptr };
+
+  void setLoaderProc(PFN_vkGetInstanceProcAddr loaderProc) {
+    s_loaderProc.store(loaderProc);
+  }
+
   LibraryLoader::LibraryLoader() {
+    m_getInstanceProcAddr = s_loaderProc.load();
+
+    if (m_getInstanceProcAddr) {
+      Logger::info(str::format("Vulkan: Using the embedder's vkGetInstanceProcAddr @ 0x", std::hex, reinterpret_cast<uintptr_t>(m_getInstanceProcAddr)));
+      return;
+    }
+
     std::tie(m_library, m_getInstanceProcAddr) = loadVulkanLibrary();
   }
 

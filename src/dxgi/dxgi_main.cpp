@@ -45,6 +45,10 @@ extern "C" {
     return S_OK;
   }
 
+  DLLEXPORT void __stdcall DXVKSetVulkanLoader(PFN_vkGetInstanceProcAddr pfnGetInstanceProcAddr) {
+    dxvk::vk::setLoaderProc(pfnGetInstanceProcAddr);
+  }
+
   DLLEXPORT HRESULT __stdcall DXGIGetDebugInterface1(UINT Flags, REFIID riid, void **ppDebug) {
     static bool errorShown = false;
 

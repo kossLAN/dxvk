@@ -5,6 +5,7 @@
     CreateDXGIFactory;
     DXGIDeclareAdapterRemovalSupport;
     DXGIGetDebugInterface1;
+    DXVKSetVulkanLoader;
 
   local:
     *;

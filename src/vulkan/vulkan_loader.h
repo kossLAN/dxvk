@@ -15,6 +15,11 @@ using PFN_wine_vkReleaseKeyedMutex = VkResult (VKAPI_PTR *)(VkDevice device, VkD
 namespace dxvk::vk {
 
   /**
+   * \brief Sets the vkGetInstanceProcAddr of loaders created after this call
+   */
+  void setLoaderProc(PFN_vkGetInstanceProcAddr loaderProc);
+
+  /**
    * \brief Vulkan library loader
    * 
    * Dynamically loads the vulkan-1 library and
